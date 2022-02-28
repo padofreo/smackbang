@@ -68,7 +68,7 @@ install_requirements:
 APP_NAME=smackbang
 
 streamlit:
-	-@streamlit run smackbang/app.py
+	-@streamlit run app.py
 
 heroku_login:
 	-@heroku login
@@ -80,5 +80,5 @@ heroku_create_app:
 	-@heroku create --ssh-git ${APP_NAME} --region eu
 
 deploy_heroku:
-	-@git push heroku heroku-deployment
+	-@git push heroku master
 	-@heroku ps:scale web=1
