@@ -65,15 +65,20 @@ install_requirements:
 #         HEROKU COMMANDS
 # ----------------------------------
 
+APP_NAME=smackbang
+
 streamlit:
 	-@streamlit run smackbang/app.py
 
 heroku_login:
 	-@heroku login
 
+heroku_keys:
+	-@heroku keys:add ~/.ssh/id_ed25519.pub
+
 heroku_create_app:
-	-@heroku create ${APP_NAME}
+	-@heroku create --ssh-git ${APP_NAME} --region eu
 
 deploy_heroku:
-	-@git push heroku master
+	-@git push heroku heroku-deployment
 	-@heroku ps:scale web=1
