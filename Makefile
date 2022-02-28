@@ -81,4 +81,4 @@ heroku_create_app:
 
 deploy_heroku:
 	-@git push heroku heroku-deployment
-	-@heroku ps:scale web=1
+#	-@heroku ps:scale web=1
