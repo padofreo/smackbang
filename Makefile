@@ -1,8 +1,6 @@
 # ----------------------------------
 #          INSTALL & TEST
 # ----------------------------------
-install_requirements:
-	@pip install -r requirements.txt
 
 check_code:
 	@flake8 scripts/* smackbang/*.py
@@ -53,3 +51,29 @@ pypi_test:
 
 pypi:
 	@twine upload dist/* -u $(PYPI_USERNAME)
+
+
+
+# ----------------------------------
+#         LOCAL SET UP
+# ----------------------------------
+
+install_requirements:
+	@pip install -r requirements.txt
+
+# ----------------------------------
+#         HEROKU COMMANDS
+# ----------------------------------
+
+streamlit:
+	-@streamlit run smackbang/app.py
+
+heroku_login:
+	-@heroku login
+
+heroku_create_app:
+	-@heroku create ${APP_NAME}
+
+deploy_heroku:
+	-@git push heroku master
+	-@heroku ps:scale web=1
