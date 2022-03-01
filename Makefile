@@ -67,6 +67,9 @@ install_requirements:
 
 APP_NAME=smackbang
 
+env:
+	API_KEY: ${{secrets.FLIGHT_DATA_TOKEN}}
+
 streamlit:
 	-@streamlit run app.py
 

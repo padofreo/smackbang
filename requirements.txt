@@ -32,3 +32,4 @@ termcolor
 #smackbang
 streamlit
 datetime
+os
