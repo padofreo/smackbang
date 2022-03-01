@@ -76,7 +76,7 @@ with row2_2:
             querystring = {"origin": origin_one, "page":page, "currency":currency , "depart_date": departure_date, "destination": destination}
 
             headers = {
-                'x-access-token': ${FLIGHT_DATA_TOKEN},
+                'x-access-token': ${{secrets.FLIGHT_DATA_TOKEN}},
                 'x-rapidapi-host': "travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com",
                 'x-rapidapi-key': "062d5d04d0msh9bf753a499a46f8p1d18edjsn469f78c5d3ac"
                     }
@@ -90,7 +90,7 @@ with row2_2:
             querystring = {"origin": origin_two, "page":page, "currency":currency , "depart_date":departure_date, "destination": destination}
 
             headers = {
-                'x-access-token': ${FLIGHT_DATA_TOKEN},
+                'x-access-token': ${{secrets.FLIGHT_DATA_TOKEN}},
                 'x-rapidapi-host': "travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com",
                 'x-rapidapi-key': "062d5d04d0msh9bf753a499a46f8p1d18edjsn469f78c5d3ac"
                       }
