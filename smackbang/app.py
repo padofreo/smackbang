@@ -54,7 +54,7 @@ with row2_2:
     if st.button('Search'):
         #response = requests.get(url, params=fare_details).json()    # NEED TO ADD API DETAILS HERE
         #fare_pred = round(response.get("flight_prices"),2)
-
+        city_url = "https://travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com/data/en-GB/cities.json"
         url = "https://travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com/v1/prices/cheap"
 
         def unpack(d):
@@ -76,7 +76,7 @@ with row2_2:
             querystring = {"origin": origin_one, "page":page, "currency":currency , "depart_date": departure_date, "destination": destination}
 
             headers = {
-                'x-access-token': ${FLIGHT_DATA_TOKEN},
+                'x-access-token': "ccf49e56bc37cdcbea0545a0a08b7e08",
                 'x-rapidapi-host': "travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com",
                 'x-rapidapi-key': "062d5d04d0msh9bf753a499a46f8p1d18edjsn469f78c5d3ac"
                     }
@@ -90,7 +90,7 @@ with row2_2:
             querystring = {"origin": origin_two, "page":page, "currency":currency , "depart_date":departure_date, "destination": destination}
 
             headers = {
-                'x-access-token': ${FLIGHT_DATA_TOKEN},
+                'x-access-token': "ccf49e56bc37cdcbea0545a0a08b7e08",
                 'x-rapidapi-host': "travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com",
                 'x-rapidapi-key': "062d5d04d0msh9bf753a499a46f8p1d18edjsn469f78c5d3ac"
                       }
