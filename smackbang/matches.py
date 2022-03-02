@@ -13,7 +13,7 @@ def get_matches(origin_one, origin_two, departure_date, return_date="", currency
     url = "https://tequila-api.kiwi.com/v2/search"
 
     # create airports_df from csv
-    airports_df = pd.read_csv('../raw_data/airport_codes.csv')
+    airports_df = pd.read_csv('../data/airport_codes.csv')
 
     # creating origins variable to used in get request
     origins = f'{origin_one},{origin_two}'
@@ -73,6 +73,9 @@ def get_matches(origin_one, origin_two, departure_date, return_date="", currency
 
     # creating new column for combined price
     df['combined_price'] = df['price']['Sydney']+ df['price']['Tokyo']
+
+    # creating new column for combined duration
+    df['combined_duration'] = df['duration']['Sydney']+ df['duration']['Tokyo']
 
     # sorting df by combined price for the top common destinations by price
     df = df.sort_values(by='combined_price')
