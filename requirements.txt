@@ -21,6 +21,7 @@ gcsfs
 google-cloud-storage
 mlflow
 s3fs
+requests
 
 # utilities
 six>=1.14
@@ -34,3 +35,4 @@ datetime
 streamlit_folium
 folium
 os
+python-dotenv
