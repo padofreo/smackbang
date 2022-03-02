@@ -66,7 +66,7 @@ install_requirements:
 # ----------------------------------
 
 streamlit:
-	-@streamlit run smackbang/app.py
+	-@streamlit run app.py
 
 heroku_login:
 	-@heroku login

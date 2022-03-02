@@ -31,3 +31,6 @@ termcolor
 #smackbang
 streamlit
 datetime
+streamlit_folium
+folium
+os
