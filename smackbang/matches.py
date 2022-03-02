@@ -36,7 +36,7 @@ def get_matches(origin_one, origin_two, departure_date, return_date="", currency
 
     # creating query string to be used in get request
     query_string = {'fly_from':origins, 'fly_to':fly_to,
-                'date_from':departure_date, 'date_to':departure_date,'return_from':'','return_to':'',
+                'date_from':departure_date, 'date_to':departure_date,'return_from':return_date,'return_to':return_date,
                'adults':1, 'children':0,'selected_cabins':'M','adult_hold_bag':1,'adult_hand_bag':1,
                "curr":'USD', 'limit':1000}
 
@@ -72,19 +72,22 @@ def get_matches(origin_one, origin_two, departure_date, return_date="", currency
     df = df.pivot(index='cityTo', columns='cityFrom', values=['price','duration','total_stops','distance','local_departure','local_arrival','deep_link'])
 
     # creating new column for combined price
-    df['combined_price'] = df['price']['Sydney']+ df['price']['Tokyo']
+    df['combined_price'] = df['price'].iloc[:,0] + df['price'].iloc[:,1]
 
     # creating new column for combined duration
-    df['combined_duration'] = df['duration']['Sydney']+ df['duration']['Tokyo']
+    df['combined_duration'] = df['duration'].iloc[:,0] + df['duration'].iloc[:,1]
 
     # sorting df by combined price for the top common destinations by price
     df = df.sort_values(by='combined_price')
 
-    # return top 5 common destinations by price
-
-
+    # return top 20 common destinations by price
     return df.head(20)
 
 if __name__ == "__main__":
-
-    print(get_matches(origin_one='NRT',origin_two='SYD',departure_date='01/04/2022'))
+    # running tests
+    df = get_matches(origin_one='NRT',origin_two='SYD',departure_date='01/04/2022')
+    print(df)
+    print(type(df))
+    print(df.shape)
+    print(df.columns)
+    print(df.index)
