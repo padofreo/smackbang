@@ -63,7 +63,7 @@ with row2_2:
     if st.button('Search'):
         #response = requests.get(url, params=fare_details).json()    # NEED TO ADD API DETAILS HERE
         #fare_pred = round(response.get("flight_prices"),2)
-
+        city_url = "https://travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com/data/en-GB/cities.json"
         url = "https://travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com/v1/prices/cheap"
 
         def unpack(d):
@@ -108,10 +108,35 @@ with row2_2:
 
             return unpack(response.json())
 
+        def get_city_location(cities):
+            headers = {
+            'x-access-token': RAPID_API_TOKEN,
+            'x-rapidapi-host': "travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com",
+            'x-rapidapi-key': RAPID_API_KEY
+            }
+
+            response = requests.request("GET", city_url, headers=headers).json()
+            city_location = []
+            for city in cities:
+                df = pd.DataFrame.from_dict(response)[['code', 'coordinates']].dropna()
+                city_location.append(df.loc[df['code'] == city].coordinates.apply(pd.Series))
+            result = pd.concat(city_location)
+            df = pd.DataFrame(cities)
+
+            result["city_code"] = df.values
+            result.reset_index(inplace = True)
+            result.drop(columns="index", inplace =True)
+            return result
+
         def merge(query_origin_one,query_origin_two):
             df= query_origin_one.merge(query_origin_two, on= "city_code")[["city_code","price_x","price_y"]]
+
             df["sum"] = df["price_x"] + df["price_y"]
-            return df
+
+            lat_lon_df = get_city_location(df['city_code'].values)
+            final = df.merge(lat_lon_df, on="city_code")
+
+            return final
 
         q1 = query_origin_one(origin_one)
         q2 = query_origin_two(origin_two)
@@ -169,20 +194,3 @@ def background_image_style(path):
 image_path = 'images/smackbang_world_map.png'
 
 #st.write(background_image_style(image_path), unsafe_allow_html=True)
-
-def unpack(d):
-
-    df = {'city_code':[], 'price':[], 'airline':[], 'flight_number':[],
-         'departure_at':[], 'return_at':[], 'expires_at':[]}
-
-    for key1, value in d['data'].items():
-
-        for key, value2 in value.items():
-            df['city_code'].append(key1)
-
-            for key, value3 in value2.items():
-
-                df[key].append(value3)
-
-    #return df
-    return pd.DataFrame(df)
