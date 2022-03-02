@@ -32,3 +32,4 @@ termcolor
 #smackbang
 streamlit
 datetime
+import python-dotenv

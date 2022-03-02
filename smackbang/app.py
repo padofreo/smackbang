@@ -4,7 +4,14 @@ import base64
 import pandas as pd
 import numpy as np
 import requests
+import os
+from dotenv import load_dotenv, find_dotenv
 
+
+env_path = find_dotenv()
+load_dotenv(env_path)
+RAPID_API_TOKEN = os.getenv('API_TOKEN')
+RAPID_API_KEY = os.getenv('API_KEY')
 
 # ---------------------------
 #        Page Configuration
@@ -77,10 +84,10 @@ with row2_2:
 
             querystring = {"origin": origin_one, "page":page, "currency":currency , "depart_date": departure_date, "destination": destination}
 
-            headers = {                
-                'x-access-token': 'ccf49e56bc37cdcbea0545a0a08b7e08',
+            headers = {
+                'x-access-token': RAPID_API_TOKEN,
                 'x-rapidapi-host': "travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com",
-                'x-rapidapi-key': "062d5d04d0msh9bf753a499a46f8p1d18edjsn469f78c5d3ac"
+                'x-rapidapi-key': RAPID_API_KEY
                     }
 
             response = requests.request("GET", url, headers=headers, params=querystring)
@@ -92,9 +99,9 @@ with row2_2:
             querystring = {"origin": origin_two, "page":page, "currency":currency , "depart_date":departure_date, "destination": destination}
 
             headers = {
-                'x-access-token': 'ccf49e56bc37cdcbea0545a0a08b7e08',
+                'x-access-token': RAPID_API_TOKEN,
                 'x-rapidapi-host': "travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com",
-                'x-rapidapi-key': "062d5d04d0msh9bf753a499a46f8p1d18edjsn469f78c5d3ac"
+                'x-rapidapi-key': RAPID_API_KEY
                       }
 
             response = requests.request("GET", url, headers=headers, params=querystring)
@@ -103,9 +110,9 @@ with row2_2:
 
         def get_city_location(cities):
             headers = {
-            'x-access-token': "fbe106a442c468b7149595587c070810",
+            'x-access-token': RAPID_API_TOKEN,
             'x-rapidapi-host': "travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com",
-            'x-rapidapi-key': "ea2c150b2bmsh41677e603b391acp1c6da6jsna112a129a08f"
+            'x-rapidapi-key': RAPID_API_KEY
             }
 
             response = requests.request("GET", city_url, headers=headers).json()
