@@ -2,7 +2,8 @@ import streamlit as st
 import datetime
 import base64
 import pandas as pd
-import numpy as np
+from streamlit_folium import folium_static
+import folium
 import requests
 import os
 from dotenv import load_dotenv, find_dotenv
@@ -12,6 +13,8 @@ env_path = find_dotenv()
 load_dotenv(env_path)
 RAPID_API_TOKEN = os.getenv('API_TOKEN')
 RAPID_API_KEY = os.getenv('API_KEY')
+airports = pd.read_csv('data/airport_codes.csv')
+back_front_df = pd.DataFrame()
 
 # ---------------------------
 #        Page Configuration
@@ -20,7 +23,7 @@ RAPID_API_KEY = os.getenv('API_KEY')
 st.set_page_config(
     page_title= 'SmackBang: Find the middle ground',
     page_icon= 'images/smackbang_favicon_32x32.png',
-    layout= 'wide') # 'centered' 'wide'
+    layout= 'wide')
 
 # Remove the menu button from Streamlit
 st.markdown(""" <style>
@@ -47,22 +50,30 @@ row1_2.markdown('Connect with friends, family and colleagues')
 row2_1, row2_2 = st.columns((1,1))
 
 with row2_1:
-    origin_one = st.text_input('Origin 1', placeholder = 'Country, city or airport') # User One Location
-    origin_two = st.text_input('Origin 2', placeholder = 'Country, city or airport') # User Two Location
+
+    # User One input, search and convert to string
+    origin_one_input = st.selectbox('Origin 1', airports)
+    origin_one = airports.loc[airports['city_airport'] == origin_one_input, 'iata_code' ].to_string(index=False)
+
+    # User Two input, search and convert to string
+    origin_two_input = st.selectbox('Origin 2', airports)
+    origin_two = airports.loc[airports['city_airport'] == origin_two_input, 'iata_code' ].to_string(index=False)
+
 
 with row2_2:
-    todays_date = datetime.date.today()                             # Default departure date is today.  can't travel back in time
-    future_date = todays_date + datetime.timedelta(days=10)         # Default return dat is 10 days.
-    departure_date = st.date_input('Meeting Date', todays_date)     # Departure Date
-    return_date = st.date_input('Return Date', future_date)         # Return Date
+    # Departure and return placeholder dates
+    default_departure_date = datetime.date.today()  + datetime.timedelta(days=28)
+    future_date = default_departure_date + datetime.timedelta(days=10)
+
+    # Departure and return date input fields
+    departure_date = st.date_input('Meeting Date', default_departure_date)
+    return_date = st.date_input('Return Date', future_date)
 
 # ---------------------------
 #        API Magic Area
 # ---------------------------
 
     if st.button('Search'):
-        #response = requests.get(url, params=fare_details).json()    # NEED TO ADD API DETAILS HERE
-        #fare_pred = round(response.get("flight_prices"),2)
         city_url = "https://travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com/data/en-GB/cities.json"
         url = "https://travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com/v1/prices/cheap"
 
@@ -85,9 +96,9 @@ with row2_2:
             querystring = {"origin": origin_one, "page":page, "currency":currency , "depart_date": departure_date, "destination": destination}
 
             headers = {
-                'x-access-token': RAPID_API_TOKEN,
+                'x-access-token': "ccf49e56bc37cdcbea0545a0a08b7e08",
                 'x-rapidapi-host': "travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com",
-                'x-rapidapi-key': RAPID_API_KEY
+                'x-rapidapi-key': "062d5d04d0msh9bf753a499a46f8p1d18edjsn469f78c5d3ac"
                     }
 
             response = requests.request("GET", url, headers=headers, params=querystring)
@@ -99,9 +110,9 @@ with row2_2:
             querystring = {"origin": origin_two, "page":page, "currency":currency , "depart_date":departure_date, "destination": destination}
 
             headers = {
-                'x-access-token': RAPID_API_TOKEN,
+                'x-access-token': "ccf49e56bc37cdcbea0545a0a08b7e08",
                 'x-rapidapi-host': "travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com",
-                'x-rapidapi-key': RAPID_API_KEY
+                'x-rapidapi-key': "062d5d04d0msh9bf753a499a46f8p1d18edjsn469f78c5d3ac"
                       }
 
             response = requests.request("GET", url, headers=headers, params=querystring)
@@ -110,13 +121,15 @@ with row2_2:
 
         def get_city_location(cities):
             headers = {
-            'x-access-token': RAPID_API_TOKEN,
-            'x-rapidapi-host': "travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com",
-            'x-rapidapi-key': RAPID_API_KEY
+                'x-access-token': "ccf49e56bc37cdcbea0545a0a08b7e08",
+                'x-rapidapi-host': "travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com",
+                'x-rapidapi-key': "062d5d04d0msh9bf753a499a46f8p1d18edjsn469f78c5d3ac"
             }
 
             response = requests.request("GET", city_url, headers=headers).json()
+
             city_location = []
+
             for city in cities:
                 df = pd.DataFrame.from_dict(response)[['code', 'coordinates']].dropna()
                 city_location.append(df.loc[df['code'] == city].coordinates.apply(pd.Series))
@@ -149,23 +162,33 @@ with row2_2:
 st.write(''' ''')
 
 st.header('Destinations')
-st.markdown('Destinations are displayed in ascending order of the combined price for all passenngers')
+st.markdown('Destinations are displayed in ascending order of the combined price for all passengers')
 
-
-row3_1, row3_2 = st.columns((1,2))
+row3_1, row3_2 = st.columns(2)
 
 with row3_1:
-    #df = pd.read_csv('smackbang/data/dummy_data.csv')               # Read the dummy data set
-    st.write(back_front_df)                                             # Show dummy data set dataframe
+    if not back_front_df.empty:
+        st.write(back_front_df.head(9))
+    else:
+        st.write('')
 
 with row3_2:
-    st.map(data=None, zoom=None, use_container_width=True)          # Map for results
 
+    m = folium.Map(location=[0, 110], zoom_start=2, width='100%')
+
+    for _, destination in back_front_df.iterrows():
+
+        folium.Marker(
+            location=[destination.lat, destination.lon],
+            popup=[destination.city_code, destination.sum],
+            icon=folium.Icon(color="blue", icon="info-sign"),
+        ).add_to(m)
+
+    folium_static(m)
 
 # ---------------------------
 #     Background Image
 # ---------------------------
-
 
 @st.cache
 def load_image(path):
