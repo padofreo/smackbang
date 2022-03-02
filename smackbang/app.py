@@ -185,20 +185,3 @@ def background_image_style(path):
 image_path = 'images/smackbang_world_map.png'
 
 #st.write(background_image_style(image_path), unsafe_allow_html=True)
-
-def unpack(d):
-
-    df = {'city_code':[], 'price':[], 'airline':[], 'flight_number':[],
-         'departure_at':[], 'return_at':[], 'expires_at':[]}
-
-    for key1, value in d['data'].items():
-
-        for key, value2 in value.items():
-            df['city_code'].append(key1)
-
-            for key, value3 in value2.items():
-
-                df[key].append(value3)
-
-    #return df
-    return pd.DataFrame(df)
