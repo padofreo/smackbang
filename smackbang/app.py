@@ -99,10 +99,35 @@ with row2_2:
 
             return unpack(response.json())
 
+        def get_city_location(cities):
+            headers = {
+            'x-access-token': "fbe106a442c468b7149595587c070810",
+            'x-rapidapi-host': "travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com",
+            'x-rapidapi-key': "ea2c150b2bmsh41677e603b391acp1c6da6jsna112a129a08f"
+            }
+
+            response = requests.request("GET", city_url, headers=headers).json()
+            city_location = []
+            for city in cities:
+                df = pd.DataFrame.from_dict(response)[['code', 'coordinates']].dropna()
+                city_location.append(df.loc[df['code'] == city].coordinates.apply(pd.Series))
+            result = pd.concat(city_location)
+            df = pd.DataFrame(cities)
+
+            result["city_code"] = df.values
+            result.reset_index(inplace = True)
+            result.drop(columns="index", inplace =True)
+            return result
+
         def merge(query_origin_one,query_origin_two):
             df= query_origin_one.merge(query_origin_two, on= "city_code")[["city_code","price_x","price_y"]]
+
             df["sum"] = df["price_x"] + df["price_y"]
-            return df
+
+            lat_lon_df = get_city_location(df['city_code'].values)
+            final = df.merge(lat_lon_df, on="city_code")
+
+            return final
 
         q1 = query_origin_one(origin_one)
         q2 = query_origin_two(origin_two)
