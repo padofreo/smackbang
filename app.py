@@ -24,12 +24,6 @@ st.markdown(""" <style>
             footer {visibility: hidden;}
             </style> """, unsafe_allow_html=True)
 
-# Tokens and keys for apis
-
-x_access_token = "ccf49e56bc37cdcbea0545a0a08b7e08"
-x_rapidapi_host = "travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com"
-x_rapidapi_key = "062d5d04d0msh9bf753a499a46f8p1d18edjsn469f78c5d3ac"
-
 
 # ---------------------------
 #        Header
@@ -95,9 +89,9 @@ with row2_2:
             querystring = {"origin": origin_one, "page":page, "currency":currency , "depart_date": departure_date, "destination": destination}
 
             headers = {
-                'x-access-token': x_access_token,
-                'x-rapidapi-host': x_rapidapi_host,
-                'x-rapidapi-key': x_rapidapi_key
+                'x-access-token': "ccf49e56bc37cdcbea0545a0a08b7e08",
+                'x-rapidapi-host': "travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com",
+                'x-rapidapi-key': "062d5d04d0msh9bf753a499a46f8p1d18edjsn469f78c5d3ac"
                     }
 
             response = requests.request("GET", url, headers=headers, params=querystring)
@@ -109,9 +103,9 @@ with row2_2:
             querystring = {"origin": origin_two, "page":page, "currency":currency , "depart_date":departure_date, "destination": destination}
 
             headers = {
-                'x-access-token': x_access_token,
-                'x-rapidapi-host': x_rapidapi_host,
-                'x-rapidapi-key': x_rapidapi_key
+                'x-access-token': "ccf49e56bc37cdcbea0545a0a08b7e08",
+                'x-rapidapi-host': "travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com",
+                'x-rapidapi-key': "062d5d04d0msh9bf753a499a46f8p1d18edjsn469f78c5d3ac"
                       }
 
             response = requests.request("GET", url, headers=headers, params=querystring)
@@ -120,9 +114,9 @@ with row2_2:
 
         def get_city_location(cities):
             headers = {
-                'x-access-token': x_access_token,
-                'x-rapidapi-host': x_rapidapi_host,
-                'x-rapidapi-key': x_rapidapi_key
+                'x-access-token': "ccf49e56bc37cdcbea0545a0a08b7e08",
+                'x-rapidapi-host': "travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com",
+                'x-rapidapi-key': "062d5d04d0msh9bf753a499a46f8p1d18edjsn469f78c5d3ac"
             }
 
             response = requests.request("GET", city_url, headers=headers).json()
