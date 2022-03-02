@@ -36,14 +36,14 @@ def get_matches(origin_one, origin_two, departure_date, return_date="", currency
                "curr":'USD', 'limit':1000}
 
     resp = requests.get(url, headers=headers, params=query_string)
-    print(origins)
-    print(type(origins))
-    print(departure_date)
-    print(type(departure_date))
-    print(fly_to)
-    print(type(fly_to))
+    # print(origins)
+    # print(type(origins))
+    # print(departure_date)
+    # print(type(departure_date))
+    # print(fly_to)
+    # print(type(fly_to))
 
-    #print(resp.status_code)
+    print(resp.status_code)
 
 
 if __name__ == "__main__":
