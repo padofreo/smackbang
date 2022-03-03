@@ -124,7 +124,7 @@ st.write(''' ''')
 
 st.header('Destinations')
 
-if origin_one_input == 'Destination':
+if origin_one_input == 'Origin' or origin_two_input == 'Origin':
     st.markdown(f'Enter your destinations, dates and your continent above.')
 else:
     city_one = airports.loc[airports['city_airport'] == origin_one_input, 'city' ].to_string(index=False)
@@ -152,7 +152,7 @@ with row3_2:
 
     df_map = back_front_df
 
-    if origin_one_input == 'Destination' or origin_two_input == 'Destination' :
+    if origin_one_input == 'Origin' or origin_two_input == 'Origin' :
         m = folium.Map(location=[0, 100], zoom_start=2, width='100%')
     else:
         origin_one_lat = airports.loc[airports['city_airport'] == origin_one_input, 'lat' ].to_string(index=False)
