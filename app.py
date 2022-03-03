@@ -144,7 +144,9 @@ with row2_2:
         def merge(query_origin_one,query_origin_two):
             df= query_origin_one.merge(query_origin_two, on= "city_code")[["city_code","price_x","price_y"]]
 
-            df["sum"] = df["price_x"] + df["price_y"]
+            df["sum"] = (df["price_x"] + df["price_y"]).apply(lambda x: f"${x:,.0f}")
+            df['price_x'] = df['price_x'].apply(lambda x: f"${x:,.0f}")
+            df['price_y'] = df['price_y'].apply(lambda x: f"${x:,.0f}")
 
             lat_lon_df = get_city_location(df['city_code'].values)
             final = df.merge(lat_lon_df, on="city_code")
@@ -155,6 +157,7 @@ with row2_2:
         q2 = query_origin_two(origin_two)
         back_front_df = merge(q1,q2)
 
+
 # ---------------------------
 #        User Output
 # ---------------------------
@@ -162,25 +165,35 @@ with row2_2:
 st.write(''' ''')
 
 st.header('Destinations')
-st.markdown('Destinations are displayed in ascending order of the combined price for all passengers')
+st.markdown('Destinations inbetween the two origins are displayed below')
 
 row3_1, row3_2 = st.columns(2)
 
+# Formatting Output dataframe
+
+back_front_df.rename(columns = {'city_code':'Destination',
+                                'price_x' : 'From Origin 1',
+                                'price_y': 'From Origin 2',
+                                'sum' : 'Combined Price',
+                                }, inplace = True)
+
 with row3_1:
     if not back_front_df.empty:
-        st.write(back_front_df.head(9))
+        st.dataframe(back_front_df[['Destination','From Origin 1','From Origin 2','Combined Price' ]].head(10).set_index('Destination'), 600, 400)
     else:
         st.write('')
 
 with row3_2:
 
+    df_map = back_front_df.iloc[:10]
+
     m = folium.Map(location=[0, 110], zoom_start=2, width='100%')
 
-    for _, destination in back_front_df.iterrows():
+    for _, dest in df_map.iterrows():
 
         folium.Marker(
-            location=[destination.lat, destination.lon],
-            popup=[destination.city_code, destination.sum],
+            location=[dest.lat, dest.lon],
+            popup= [dest.Destination, dest['From Origin 1'],dest['From Origin 2'],dest['Combined Price'] ],
             icon=folium.Icon(color="blue", icon="info-sign"),
         ).add_to(m)
 
