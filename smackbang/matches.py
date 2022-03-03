@@ -3,7 +3,7 @@ import pandas as pd
 import requests
 from requests.structures import CaseInsensitiveDict
 
-def get_matches(origin_one, origin_two, departure_date, return_date, currency, continent):
+def get_matches(origin_one='NRT', origin_two='SYD', departure_date="01/04/2022", return_date='', currency='USD', continent='AS'):
     '''
     Required arguments: origin_one, origin_two and contintent
     Optional argugments: return_date
@@ -96,15 +96,15 @@ def get_matches(origin_one, origin_two, departure_date, return_date, currency, c
 
 if __name__ == "__main__":
     ## user input
-    origin_one = 'NRT'
-    origin_two = 'SYD'
-    depature_date = '01/04/2022'
-    return_date = "08/04/2022"
-    continent = "AS"
-    currency = "USD"
+    # origin_one = 'NRT'
+    # origin_two = 'SYD'
+    # depature_date = '01/04/2022'
+    # return_date = ""
+    # continent = "AS"
+    # currency = "USD"
 
-    df = get_matches(origin_one,origin_two,depature_date,return_date,currency,continent)
-    print(df['deep_link'].iloc[0,0])
+    df = get_matches()
+    print(df)
 
 
     #print(df)
