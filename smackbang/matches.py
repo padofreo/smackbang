@@ -1,8 +1,9 @@
+import numpy as np
 import pandas as pd
 import requests
 from requests.structures import CaseInsensitiveDict
 
-def get_matches(origin_one, origin_two, departure_date, return_date="", currency='USD', continent='AS'):
+def get_matches(origin_one, origin_two, departure_date, return_date, currency, continent):
     '''
     Required arguments: origin_one, origin_two and contintent
     Optional argugments: return_date
@@ -38,7 +39,7 @@ def get_matches(origin_one, origin_two, departure_date, return_date="", currency
     query_string = {'fly_from':origins, 'fly_to':fly_to,
                 'date_from':departure_date, 'date_to':departure_date,'return_from':return_date,'return_to':return_date,
                'adults':1, 'children':0,'selected_cabins':'M','adult_hold_bag':1,'adult_hand_bag':1,
-               "curr":'USD', 'limit':1000}
+               "curr":currency, 'limit':1000}
 
     # creating response d in json format
     d = requests.get(url, headers=headers, params=query_string).json()
@@ -80,14 +81,34 @@ def get_matches(origin_one, origin_two, departure_date, return_date="", currency
     # sorting df by combined price for the top common destinations by price
     df = df.sort_values(by='combined_price')
 
+    #creating empty lat,long columns type float64
+    df['lat'] = np.nan
+    df['lon'] = np.nan
+
+    # grabbing lat,lon from airports df
+    for city in list(df.index):
+        if city in list(airports_df['city']):
+            df.loc[city,'lat']=list(airports_df[airports_df['city']==city]['lat'])[0]
+            df.loc[city,'lon']=list(airports_df[airports_df['city']==city]['lon'])[0]
+
     # return top 20 common destinations by price
     return df.head(20)
 
 if __name__ == "__main__":
-    # running tests
-    df = get_matches(origin_one='NRT',origin_two='SYD',departure_date='01/04/2022')
+    ## user input
+    origin_one = 'NRT'
+    origin_two = 'SYD'
+    depature_date = '01/04/2022'
+    return_date = ""
+    continent = "AS"
+    currency = "USD"
+
+    df = get_matches(origin_one,origin_two,depature_date,return_date,currency,continent)
+
     print(df)
-    print(type(df))
-    print(df.shape)
-    print(df.columns)
-    print(df.index)
+    # running tests
+    # print(df)
+    # print(type(df))
+    # print(df.shape)
+    # print(df.columns)
+    # print(df.index)
