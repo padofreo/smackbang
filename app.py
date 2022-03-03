@@ -7,6 +7,7 @@ import folium
 import requests
 import os
 from dotenv import load_dotenv, find_dotenv
+import time
 
 
 env_path = find_dotenv()
@@ -62,18 +63,44 @@ with row2_1:
 
 with row2_2:
     # Departure and return placeholder dates
-    default_departure_date = datetime.date.today()  + datetime.timedelta(days=28)
+    default_departure_date = datetime.date.today() + datetime.timedelta(days=28)
     future_date = default_departure_date + datetime.timedelta(days=10)
 
     # Departure and return date input fields
-    departure_date = st.date_input('Meeting Date', default_departure_date)
-    return_date = st.date_input('Return Date', future_date)
+    departure_date = (st.date_input('Meeting Date', default_departure_date)).strftime("%d/%m/%Y")
+    return_date = (st.date_input('Return Date', future_date)).strftime("%d/%m/%Y")
+
+    st.write(departure_date)
+    st.write(return_date)
+
+    # Continent
+    continent_input = st.selectbox('Continents', ('Asia', 'Africa', 'Europe', 'North America', 'South America', 'Oceania'))
+    continent = st.selectbox('Continents', ('AS', 'AF', 'EU', 'NA', 'SA', 'OC'))
+
+
+
+# ('Asia', 'Africa', 'Europe', 'North America', 'South America', 'Oceania')
 
 # ---------------------------
 #        API Magic Area
 # ---------------------------
 
     if st.button('Search'):
+        # Progress Bar
+        'Hold on while we search 1,000\'s of flights ...'
+        latest_iteration = st.empty()
+        bar = st.progress(0)
+
+        for i in range(100):
+            # Update the progress bar with each iteration.
+            bar.progress(i + 1)
+            time.sleep(0.1)
+
+        bar.empty()
+
+        '...and now we\'re done.  Checkout the places you could go below!'
+
+
         city_url = "https://travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com/data/en-GB/cities.json"
         url = "https://travelpayouts-travelpayouts-flight-data-v1.p.rapidapi.com/v1/prices/cheap"
 
