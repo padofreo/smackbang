@@ -92,20 +92,22 @@ def get_matches(origin_one, origin_two, departure_date, return_date, currency, c
             df.loc[city,'lon']=list(airports_df[airports_df['city']==city]['lon'])[0]
 
     # return top 20 common destinations by price
-    return df.head(20)
+    return df.head(20).dropna()
 
 if __name__ == "__main__":
     ## user input
     origin_one = 'NRT'
     origin_two = 'SYD'
     depature_date = '01/04/2022'
-    return_date = ""
+    return_date = "08/04/2022"
     continent = "AS"
     currency = "USD"
 
     df = get_matches(origin_one,origin_two,depature_date,return_date,currency,continent)
+    print(df['deep_link'].iloc[0,0])
 
-    print(df)
+
+    #print(df)
     # running tests
     # print(df)
     # print(type(df))
