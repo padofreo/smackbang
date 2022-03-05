@@ -1,9 +1,7 @@
-from operator import index
-from black import out
 import streamlit as st
 import datetime
-import pandas as pd
 import time
+import pandas as pd
 import pydeck as pdk
 import requests
 from requests.structures import CaseInsensitiveDict
@@ -62,7 +60,7 @@ with row2_1:
 
 with row2_2:
     # Departure and return placeholder dates
-    default_departure_date = datetime.date.today() + datetime.timedelta(days=28)
+    default_departure_date = datetime.date.today() + datetime.timedelta(days=14)
     future_date = default_departure_date + datetime.timedelta(days=50)
 
     # Departure and return date input fields
@@ -118,10 +116,9 @@ with row2_2:
         matches_cities = matches_df.index.values
 
         keywords = ','.join(map(str,matches_cities))
-
         query_string_twitter = {'keywords':keywords}
 
-        result = requests.get(url_twitter, headers=headers, params=query_string_twitter).json()
+        result = requests.get(url_twitter, headers=headers, params=query_string_twitter).json()       # --> my issue is here
         twitter_df = pd.DataFrame(result)
         twitter_df['City'] = twitter_df['City'].str.title()
         twitter_df = twitter_df.set_index('City')
@@ -129,8 +126,6 @@ with row2_2:
 # ---------------------------
 #        User Output Header
 # ---------------------------
-st.write('''  ''')
-st.write('''  ''')
 
 row3_1, row3_2 = st.columns((1,1))
 
@@ -159,7 +154,7 @@ with row4_1:
 
     else:
 
-        # Copy Matches API dataframe for user output
+        # Copy Matches API dataframe for user output and get only required series
         output_df = matches_df.copy()
         output_df = output_df.iloc[:,[0,1,14,12,13]]
         output_df = pd.merge(output_df, twitter_df, left_index=True, right_index=True)
@@ -172,7 +167,7 @@ with row4_1:
 
         # Add two columns for links to booking site
         output_df['Bookings'] = f'from {city_one}' + '#' + output_df.iloc[:,3]
-        output_df['Bookings '] = f'from {city_two}' + '#' + output_df.iloc[:,4]
+        output_df['Bookings '] = f'from {city_two}' + '#' + output_df.iloc[:,4]   # Space after bookings_ is okay
 
         def make_clickable(val):
             name, url = val.split('#')
@@ -180,7 +175,7 @@ with row4_1:
 
         # link is the column with hyperlinks
         output_df['Bookings'] = output_df['Bookings'].apply(make_clickable)
-        output_df['Bookings '] = output_df['Bookings '].apply(make_clickable)
+        output_df['Bookings '] = output_df['Bookings '].apply(make_clickable) # Space after bookings_ is okay
 
         # Final output as a HTML table so links work
         output_df = output_df.iloc[:,[0,1,2,5,6,7]]
