@@ -1,14 +1,13 @@
 [theme]
 
-#primaryColor = "#59ABE3"
-#backgroundColor = "#FFFFFF"
-#secondaryBackgroundColor =  "#ebd2b9" # wheat  "#d7ab82" # yellow <-- not enough contrast
-#textColor = "#6e7074" # grey
-#font = "sans serif" # Font family (serif | sans serif | mono) for the page. Will not impact code areas.
-
-
-primaryColor="#6eb52f"
-backgroundColor="#f0f0f5"
-secondaryBackgroundColor="#e0e0ef"
-textColor="#262730"
+base = "light"
+primaryColor="#00ABE1"
+backgroundColor="#FFFFFF"
+secondaryBackgroundColor="#00ABE1"
+textColor="#161F6D"
 font="sans serif"
+
+
+[mapbox]
+
+token = 'pk.eyJ1IjoicGFkb2ZyZW8iLCJhIjoiY2wwMGtjZTZ6MDlteDNicWdnZmUzMTN3ayJ9.qXpbfx5o9Gkzrz22cEUfnw'

@@ -32,6 +32,13 @@ termcolor
 #smackbang
 streamlit
 datetime
-streamlit_folium
-folium
 python-dotenv
+fastapi
+uvicorn
+
+#twitter.py
+regex
+nltk
+textblob
+tweepy
+matplotlib
