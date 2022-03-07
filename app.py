@@ -39,7 +39,7 @@ row1_2.write(
 """Connect with friends, family and colleagues with our easy to use tool. Batch 796 has done all the hard work for you.
 
 Enter details in the fields below and we'll get cracking finding great destinations to meet up.  Our Fare Prediction model will compare the latest prices
-to see if you're getting a great deal and our Verdict analysis has got it's pulse of the current vibe of the destination.
+to see if you're getting a great deal and our Verdict analysis has got it's pulse on the current vibe of the destination options.
 """)
 
 # ---------------------------
@@ -158,7 +158,7 @@ if origin_one_input == 'Origin' or origin_two_input == 'Origin' or matches_df.em
     st.header('So what Destinations are looking good ...')
     st.markdown('Enter your origins, travel dates and destination continent above to see exciting destinations to meet up.')
 else:
-    st.header(f'Destinations bewteen {city_one} and {city_two}')
+    st.header(f'Destinations between {city_one} and {city_two}')
 
 row3_1, row3_2, row3_3, row3_4 = st.columns((1,1,1,1))
 
