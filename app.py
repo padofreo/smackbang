@@ -5,6 +5,7 @@ import pandas as pd
 import pydeck as pdk
 import requests
 from requests.structures import CaseInsensitiveDict
+import random
 
 
 airports = pd.read_csv('data/airport_codes.csv')
@@ -39,7 +40,7 @@ row1_2.write(
 """Connect with friends, family and colleagues with our easy to use tool. Batch 796 has done all the hard work for you.
 
 Enter details in the fields below and we'll get cracking finding great destinations to meet up.  Our Fare Prediction model will compare the latest prices
-to see if you're getting a great deal and our Verdict analysis has got it's pulse on the current vibe of the destination options.
+to see if you're getting a great deal and our Verdict analysis has got it's pulse on the current vibe of your destinations.
 """)
 
 # ---------------------------
@@ -132,21 +133,27 @@ with row2_14:
             result_matches = requests.get(url, headers=headers, params=query_string).json()
             matches_df = pd.DataFrame(result_matches)
         except:
-            raise st.write('Ouch.  Looks like there\'s no flights on these dates.  Better try again.')
+            st.write('Well that\'s embarrassing. Looks like there\'s no flights on these dates.  Better try again.')
+            st.stop()
 
 
         # Twitter API query
-        url_twitter = "https://smackbang-image-w76hg6ifha-ew.a.run.app/twitter"
+        try:
+            url_twitter = "https://smackbang-image-w76hg6ifha-ew.a.run.app/twitter"
 
-        matches_cities = matches_df.index.values
-        keywords = ','.join(map(str,matches_cities))
+            matches_cities = matches_df.index.values
+            keywords = ','.join(map(str,matches_cities))
 
-        query_string_twitter = {'keywords':keywords}
+            query_string_twitter = {'keywords':keywords}
 
-        result = requests.get(url_twitter, headers=headers, params=query_string_twitter).json()
-        twitter_df = pd.DataFrame(result)
-        twitter_df['City'] = twitter_df['City'].str.title()
-        twitter_df = twitter_df.set_index('City')
+            result = requests.get(url_twitter, headers=headers, params=query_string_twitter).json()
+            twitter_df = pd.DataFrame(result)
+            twitter_df['City'] = twitter_df['City'].str.title()
+            twitter_df = twitter_df.set_index('City')
+        except:
+            st.write('Well that\'s embarrassing. One of your chosen destinations has no negative sentiment.  Try a different continent.')
+            st.stop()
+
 
 # ---------------------------
 #        User Output Header
@@ -218,9 +225,12 @@ with row4_1:
             output_df['Book2'] = output_df['Book2'].apply(make_clickable)
             output_df['Book1'] = output_df['Book1'].apply(make_clickable)
 
+            # Add fare prediction results
+            output_df['Fare_Prediction'] = random.randint(1,3)
+
             # Final output as a HTML table so links work
-            output_df = output_df.iloc[:,[1,0,2,5,7,6]]
-            output_df.columns=[f'{city_one}', f'{city_two}', 'Combined Fare', 'Verdict', 'Book', 'Book']
+            output_df = output_df.iloc[:,[1,0,2,8,5,7,6]]
+            output_df.columns=[f'{city_one}', f'{city_two}', 'Combined Fare', "Fare Prediction",'Verdict', 'Book', 'Book']
             output_df = output_df.to_html(escape=False)
 
             return st.write(output_df, unsafe_allow_html=True)
@@ -282,7 +292,7 @@ with row4_2:
                 longitude=100,
                 bearing=0,
                 pitch=45,
-                zoom=0,
+                zoom=1,
             ),
 
             layers=[
