@@ -19,3 +19,12 @@ streamlit
 datetime
 pydeck
 requests
+
+#twitter.py
+regex
+nltk
+textblob
+tweepy
+matplotlib
+
+python-multipart
