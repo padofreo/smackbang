@@ -229,7 +229,7 @@ else:
             st.markdown('Fair Prediction')
             st.write("🟢 Better than average. ✈️")
             st.write("🟠 Prices are about average. 😐")
-            st.write("🔴 Worse than better. 🥵")
+            st.write("🔴 More expensive than average. 🥵")
 
         with row3_2:
             st.markdown("Verdict")
@@ -275,8 +275,8 @@ with row4_1:
             output_df = pd.merge(output_df, twitter_df, left_index=True, right_index=True)
 
             # Get fare prediction model data and to dataframe {6, 7}
-            output_df[f"{city_x}"] = preds_df1.values * currency_factor
-            output_df[f"{city_y}"] = preds_df2.values * currency_factor
+            output_df[f"{city_x}"] = preds_df1.values * currency_factor * 5
+            output_df[f"{city_y}"] = preds_df2.values * currency_factor * 5
 
             # Add two columns for links to booking site {8, 9}
             output_df['Book1'] = f'from {city_two}' + '#' + output_df.iloc[:,3]
@@ -325,16 +325,26 @@ with row4_1:
 
             # Currency format for columns that need it
             pd.set_option('display.max_colwidth', None)
-            output_df.iloc[:,0] = output_df.iloc[:,0].apply(lambda x: f"{x:,.2f}")
-            output_df.iloc[:,1] = output_df.iloc[:,1].apply(lambda x: f"{x:,.2f}")
-            output_df.iloc[:,2] = output_df.iloc[:,2].apply(lambda x: f"{x:,.2f}")
-            output_df.iloc[:,6] = output_df.iloc[:,6].apply(lambda x: f"{x:,.2f}")
-            output_df.iloc[:,7] = output_df.iloc[:,7].apply(lambda x: f"{x:,.2f}")
 
-            st.write(output_df.iloc[:,[0,1,6,7]])
+            def currency_sign(s):
+                currency_dict = {"USD":"$", "AUD":"$",
+                                "NZD":"$", "EUR": "€",
+                                "JPY":"¥", "INR": "₹"}
+                return currency_dict.get(s)
+
+            currency_formatting = currency_sign(currency)
+
+            output_df.iloc[:,0] = output_df.iloc[:,0].apply(lambda x: f"{currency_formatting}{x:,.0f}")
+            output_df.iloc[:,1] = output_df.iloc[:,1].apply(lambda x: f"{currency_formatting}{x:,.0f}")
+            output_df.iloc[:,2] = output_df.iloc[:,2].apply(lambda x: f"{currency_formatting}{x:,.0f}")
+            output_df.iloc[:,6] = output_df.iloc[:,6].apply(lambda x: f"{currency_formatting}{x:,.0f}")
+            output_df.iloc[:,7] = output_df.iloc[:,7].apply(lambda x: f"{currency_formatting}{x:,.0f}")
+
+            #st.write(output_df.iloc[:,[0,1,6,7]])
 
             # Final output as a HTML table so links work
             output_df = output_df.iloc[:,[1,0,2,10,11,5,9,8]]
+            pd.set_option('display.colheader_justify', 'center')
             output_df.columns=[f'{city_one}', f'{city_two}', 'Combined Fare', f'Predict {city_one}', f'Predict {city_two}', 'Verdict', 'Book', 'Book']
             output_df = output_df.to_html(escape=False)
 
