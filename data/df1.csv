@@ -1,0 +1,9 @@
+,Airline,Date_of_Journey,Source,Destination,Route,Dep_Time,Arrival_Time,Duration,Total_Stops,Additional_Info,origin_one_latitude,origin_one_longitude,origin_two_latitude,origin_two_longitude
+0,Multiple Carriers,31/03/2022,Sydney,Taipei,Sydney-Taipei,21:45,14:45,20h 0m,1,No info,25.0777,121.233002,-33.94609833,151.177002
+1,Multiple Carriers,31/03/2022,Sydney,Hanoi,Sydney-Hanoi,19:05,11:25,17h 40m,1,No info,21.22120094,105.8069992,-33.94609833,151.177002
+2,Multiple Carriers,31/03/2022,Sydney,Bangkok,Sydney-Bangkok,08:55,16:20,9h 20m,0,No info,13.68109989,100.7470016,-33.94609833,151.177002
+3,Multiple Carriers,31/03/2022,Sydney,Kuala Lumpur,Sydney-Kuala Lumpur,08:25,19:45,10h 45m,1,No info,2.745579958,101.7099991,-33.94609833,151.177002
+4,Multiple Carriers,31/03/2022,Sydney,Osaka,Sydney-Osaka,21:45,08:05,12h 20m,1,No info,34.78549957,135.4380035,-33.94609833,151.177002
+5,Multiple Carriers,31/03/2022,Sydney,Fukuoka,Sydney-Fukuoka,21:45,08:50,13h 5m,1,No info,33.58589935,130.451004,-33.94609833,151.177002
+6,Multiple Carriers,31/03/2022,Sydney,Ho Chi Minh City,Sydney-Ho Chi Minh City,07:00,16:10,8h 55m,0,No info,10.81879997,106.6520004,-33.94609833,151.177002
+7,Multiple Carriers,31/03/2022,Sydney,Jakarta,Sydney-Jakarta,06:00,18:05,13h 10m,1,No info,-6.12556982,106.6559982,-33.94609833,151.177002
