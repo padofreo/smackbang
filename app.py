@@ -20,7 +20,7 @@ preds_df2 = pd.DataFrame()
 
 st.set_page_config(
     page_title= 'SmackBang: Find the middle ground',
-    page_icon= 'images/smackbang_favicon_32x32.png',
+    page_icon= 'images/smackbang_favicon.png',
     layout= 'wide')
 
 # Remove the menu button and footer note from Streamlit
@@ -269,25 +269,14 @@ with row4_1:
 
         currency_factor = currency_con(currency)
 
-        #currency_factor = 0.013
-
         def output_tables(matches_df):
-            # 1.0 Copy Matches API dataframe required columns for user output
+            # Copy Matches API dataframe required columns for user output
             output_df = matches_df.iloc[:,[0,1,14,12,13]]
             output_df = pd.merge(output_df, twitter_df, left_index=True, right_index=True)
 
-            # 2.0 Currency format for columns that need it   {0, 1, 2}
-            pd.set_option('display.max_colwidth', None)
-            output_df.iloc[:,0] = output_df.iloc[:,0].apply(lambda x: f"{x:,.0f}")
-            output_df.iloc[:,1] = output_df.iloc[:,1].apply(lambda x: f"{x:,.0f}")
-            output_df.iloc[:,2] = output_df.iloc[:,2].apply(lambda x: f"{x:,.0f}")
-
-
-            # 3.0 Get fare prediction model data and to dataframe {6, 7}
+            # Get fare prediction model data and to dataframe {6, 7}
             output_df[f"{city_x}"] = preds_df1.values * currency_factor
             output_df[f"{city_y}"] = preds_df2.values * currency_factor
-            output_df[f"{city_x}"] = output_df[f"{city_x}"].apply(lambda x: f"{x:,.0f}")
-            output_df[f"{city_y}"] = output_df[f"{city_y}"].apply(lambda x: f"{x:,.0f}")
 
             # Add two columns for links to booking site {8, 9}
             output_df['Book1'] = f'from {city_two}' + '#' + output_df.iloc[:,3]
@@ -301,8 +290,51 @@ with row4_1:
             output_df['Book1'] = output_df['Book1'].apply(make_clickable)
             output_df['Book2'] = output_df['Book2'].apply(make_clickable)
 
+            # Predict Origin One Traffic Lights
+            output_df['Var1'] = ''
+
+            for index, row in output_df.iterrows():
+                std = row[7] * 0.1
+                red_zone = row[7] + std
+                green_zone = row[7] - std
+                current = row[1]
+
+                if current >=0 and current <= green_zone:
+                    output_df.loc[index, 'Var1'] =  "🟢"
+                if current > green_zone and current < red_zone:
+                    output_df.loc[index, 'Var1'] =  "🟠"
+                if current >= red_zone:
+                    output_df.loc[index, 'Var1'] =  "🔴"
+
+            # Predict Origin Two Traffic Lights
+            output_df['Var2'] = ''
+
+            for index, row in output_df.iterrows():
+                std = row[6] * 0.1
+                red_zone = row[6] + std
+                green_zone = row[6] - std
+                current = row[0]
+
+                if current >=0 and current <= green_zone:
+                    output_df.loc[index, 'Var2'] =  "🟢"
+                if current > green_zone and current < red_zone:
+                    output_df.loc[index, 'Var2'] =  "🟠"
+                if current >= red_zone:
+                    output_df.loc[index, 'Var2'] =  "🔴"
+
+
+            # Currency format for columns that need it
+            pd.set_option('display.max_colwidth', None)
+            output_df.iloc[:,0] = output_df.iloc[:,0].apply(lambda x: f"{x:,.2f}")
+            output_df.iloc[:,1] = output_df.iloc[:,1].apply(lambda x: f"{x:,.2f}")
+            output_df.iloc[:,2] = output_df.iloc[:,2].apply(lambda x: f"{x:,.2f}")
+            output_df.iloc[:,6] = output_df.iloc[:,6].apply(lambda x: f"{x:,.2f}")
+            output_df.iloc[:,7] = output_df.iloc[:,7].apply(lambda x: f"{x:,.2f}")
+
+            st.write(output_df.iloc[:,[0,1,6,7]])
+
             # Final output as a HTML table so links work
-            output_df = output_df.iloc[:,[1,0,2,7,6,5,9,8]]
+            output_df = output_df.iloc[:,[1,0,2,10,11,5,9,8]]
             output_df.columns=[f'{city_one}', f'{city_two}', 'Combined Fare', f'Predict {city_one}', f'Predict {city_two}', 'Verdict', 'Book', 'Book']
             output_df = output_df.to_html(escape=False)
 
