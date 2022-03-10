@@ -345,7 +345,7 @@ with row4_1:
             # Final output as a HTML table so links work
             output_df = output_df.iloc[:,[1,0,2,10,11,5,9,8]]
             pd.set_option('display.colheader_justify', 'center')
-            output_df.columns=[f'{city_one}', f'{city_two}', f'Combined \n Fare', f'Predict \n{city_one}', f'Predict \n{city_two}', f'Destination \nVibe', 'Book', 'Book']
+            output_df.columns=[f'{city_one}', f'{city_two}', f'Combined \n Fare', f'Prediction \n{city_one}', f'Prediction \n{city_two}', f'Destination \nVibe', 'Book', 'Book']
             output_df = output_df.to_html(escape=False)
 
             return st.write(output_df, unsafe_allow_html=True)
