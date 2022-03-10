@@ -73,8 +73,8 @@ with row2_1:
 
 with row2_2:
     # Departure and return placeholder dates
-    default_departure_date = datetime.date.today() + datetime.timedelta(days=14)
-    future_date = datetime.date.today() + datetime.timedelta(days=28)
+    default_departure_date = datetime.date.today() + datetime.timedelta(days=30)
+    future_date = datetime.date.today() + datetime.timedelta(days=45)
 
     # Departure and return date input fields
     departure_date = (st.date_input('Travel Date', default_departure_date, min_value=datetime.date.today())).strftime("%d/%m/%Y")
@@ -226,7 +226,7 @@ if origin_one_input == 'Origin' or origin_two_input == 'Origin' or matches_df.em
     st.write('')
 else:
         with row3_1:
-            st.markdown('Fair Prediction')
+            st.markdown('Fare Prediction')
             st.write("🟢 Better than average. ✈️")
             st.write("🟠 Prices are about average. 😐")
             st.write("🔴 More expensive than average. 🥵")
