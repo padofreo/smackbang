@@ -1,8 +1,0 @@
-,Airline,Date_of_Journey,Source,Destination,Route,Dep_Time,Arrival_Time,Duration,Total_Stops,Additional_Info,origin_one_latitude,origin_one_longitude,origin_two_latitude,origin_two_longitude
-0,Multiple Carriers,23/03/2022,Perth,Sydney,Perth-Sydney,08:05,16:25,4h 10m,0,No info,-33.94609833,151.177002,-37.0080986,174.7920074
-1,Multiple Carriers,23/03/2022,Perth,Brisbane,Perth-Brisbane,08:05,16:25,4h 20m,0,No info,-27.38419914,153.1170044,-37.0080986,174.7920074
-2,Multiple Carriers,23/03/2022,Perth,Melbourne,Perth-Melbourne,08:00,14:25,3h 25m,0,No info,-37.673302,144.843002,-37.0080986,174.7920074
-3,Multiple Carriers,23/03/2022,Perth,Adelaide,Perth-Adelaide,10:40,16:00,2h 50m,0,No info,-34.945,138.531006,-37.0080986,174.7920074
-4,Multiple Carriers,23/03/2022,Perth,Canberra,Perth-Canberra,08:05,16:55,5h 20m,1,No info,-35.30690002,149.1950073,-37.0080986,174.7920074
-5,Multiple Carriers,23/03/2022,Perth,Wellington,Perth-Wellington,16:45,17:35,19h 50m,2,No info,-41.32720184,174.8049927,-37.0080986,174.7920074
-6,Multiple Carriers,23/03/2022,Perth,Christchurch,Perth-Christchurch,16:45,17:25,19h 40m,2,No info,-43.48939896,172.5319977,-37.0080986,174.7920074
