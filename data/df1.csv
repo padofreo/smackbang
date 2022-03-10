@@ -1,8 +1,0 @@
-,Airline,Date_of_Journey,Source,Destination,Route,Dep_Time,Arrival_Time,Duration,Total_Stops,Additional_Info,origin_one_latitude,origin_one_longitude,origin_two_latitude,origin_two_longitude
-0,Multiple Carriers,23/03/2022,Auckland,Sydney,Auckland-Sydney,09:10,10:55,3h 25m,0,No info,-33.94609833,151.177002,-37.0080986,174.7920074
-1,Multiple Carriers,23/03/2022,Auckland,Brisbane,Auckland-Brisbane,09:15,09:45,3h 30m,0,No info,-27.38419914,153.1170044,-37.0080986,174.7920074
-2,Multiple Carriers,23/03/2022,Auckland,Melbourne,Auckland-Melbourne,08:45,10:40,3h 55m,0,No info,-37.673302,144.843002,-37.0080986,174.7920074
-3,Multiple Carriers,23/03/2022,Auckland,Adelaide,Auckland-Adelaide,08:45,14:10,7h 10m,1,No info,-34.945,138.531006,-37.0080986,174.7920074
-4,Multiple Carriers,23/03/2022,Auckland,Canberra,Auckland-Canberra,08:45,14:55,8h 0m,1,No info,-35.30690002,149.1950073,-37.0080986,174.7920074
-5,Multiple Carriers,23/03/2022,Auckland,Wellington,Auckland-Wellington,06:30,07:35,1h 5m,0,No info,-41.32720184,174.8049927,-37.0080986,174.7920074
-6,Multiple Carriers,23/03/2022,Auckland,Christchurch,Auckland-Christchurch,06:00,07:25,1h 25m,0,No info,-43.48939896,172.5319977,-37.0080986,174.7920074
