@@ -126,7 +126,7 @@ with row2_14:
     if st.button('SmackBang my Destinations'):
         # Spinner
         with st.spinner('Hold on while we search 1,000\'s of flights ...'):
-            time.sleep(5)
+            time.sleep(15)
 
         # Matches API query and output
         try:
@@ -142,7 +142,7 @@ with row2_14:
             matches_df = pd.DataFrame(result_matches)
 
         except:
-            st.write('Well that\'s embarrassing. Looks like there\'s no flights on these dates.  Try a different date.')
+            st.info('Well that\'s embarrassing. Looks like there\'s no flights on these dates.  Try a different date.')
             st.stop()
 
 
@@ -186,7 +186,7 @@ with row2_14:
             preds_df2 = pd.DataFrame(response_df2)
 
         except:
-            st.write('Well that\'s embarrassing. Our model has gone to the pub for a drink.')
+            st.info('Well that\'s embarrassing. Our model has gone to the pub for a drink. Try other options.')
             st.stop()
 
 
@@ -203,7 +203,7 @@ with row2_14:
             twitter_df['City'] = twitter_df['City'].str.title()
             twitter_df = twitter_df.set_index('City')
         except:
-            st.write('Well that\'s embarrassing. One of your destinations doesn\'t like Twitter.  Try a different continent maybe.')
+            st.info('Well that\'s embarrassing. One of your destinations doesn\'t like Twitter.  Try a different continent maybe.')
             st.stop()
 
 
@@ -232,7 +232,7 @@ else:
             st.write("🔴 More expensive than average. 🥵")
 
         with row3_2:
-            st.markdown("Verdict")
+            st.markdown("Destination Vibe")
             st.write("👍 Feedback tells us it's a good time to go.")
             st.write("👎 Better choose another destination.")
 
@@ -345,7 +345,7 @@ with row4_1:
             # Final output as a HTML table so links work
             output_df = output_df.iloc[:,[1,0,2,10,11,5,9,8]]
             pd.set_option('display.colheader_justify', 'center')
-            output_df.columns=[f'{city_one}', f'{city_two}', 'Combined Fare', f'Predict {city_one}', f'Predict {city_two}', 'Verdict', 'Book', 'Book']
+            output_df.columns=[f'{city_one}', f'{city_two}', f'Combined \n Fare', f'Predict \n{city_one}', f'Predict \n{city_two}', f'Destination \nVibe', 'Book', 'Book']
             output_df = output_df.to_html(escape=False)
 
             return st.write(output_df, unsafe_allow_html=True)
@@ -356,6 +356,33 @@ with row4_1:
 # ---------------------------
 #        Arc Layer
 # ---------------------------
+
+
+# ----- API for photos
+
+def get_photo(cities):
+
+    urls = []
+
+    for city in cities:
+
+        #the response of this is a JSON file that generates a photo reference
+        api_key = "AIzaSyCMMb6QvT3xndUa0Phh5o2S2NWhmAKa5-A"
+        url = f'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input={city}&key={api_key}&inputtype=textquery&fields=name,photos'
+        response = requests.request("GET", url).json()
+
+        #the reference that we need to get the photo
+        photo_ref = response["candidates"][0]["photos"][0]["photo_reference"]
+
+        #make another request for a photo response and return url list
+        photo_url = f'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference={photo_ref}&key={api_key}&maxwidth=400&maxheight=400'
+        response_photo = requests.request("GET",photo_url).url
+        urls.append(response_photo)
+
+    return urls
+
+results = get_photo(matches_df.index.values)
+
 
 with row4_2:
 
@@ -384,6 +411,9 @@ with row4_2:
         map_df = pd.merge(map_df, matches_map_query.iloc[:,0], how='inner', left_on='dest_city', right_index=True)
         map_df = pd.merge(map_df, matches_map_query.iloc[:,1], how='inner', left_on='dest_city', right_index=True)
 
+        map_df['photo'] = results
+        map_df['photo'] = '<img src="'+ map_df['photo'] + '" width="120" >'
+
         # Origin Two dataframe creation and population
         map_df2 = pd.DataFrame(matches_names, columns=['dest_city'])
         map_df2['origin_one'] = origin_one
@@ -392,6 +422,10 @@ with row4_2:
 
         map_df2 = pd.merge(map_df2, matches_map_query.iloc[:,0], how='inner', left_on='dest_city', right_index=True)
         map_df2 = pd.merge(map_df2, matches_map_query.iloc[:,1], how='inner', left_on='dest_city', right_index=True)
+        map_df2['photo'] = results
+        map_df2['photo'] = '<img src="'+ map_df2['photo'] + '" width="120" >'
+
+        TOOLTIP = {"html": "{photo} {dest_city}"}
 
         # Start and end colours
         ORIGIN = [255, 0, 128]
@@ -401,9 +435,7 @@ with row4_2:
         st.pydeck_chart(pdk.Deck(
             map_provider='mapbox',
             map_style='mapbox://styles/mapbox/light-v10',
-            tooltip = {
-                    "text": "Destination: {dest_city}"
-                    },
+            tooltip = TOOLTIP,
             initial_view_state = pdk.ViewState(
                 latitude=0,
                 longitude=100,
