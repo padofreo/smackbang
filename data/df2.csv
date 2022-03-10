@@ -1,9 +1,0 @@
-,Airline,Date_of_Journey,Source,Destination,Route,Dep_Time,Arrival_Time,Duration,Total_Stops,Additional_Info,origin_one_latitude,origin_one_longitude,origin_two_latitude,origin_two_longitude
-0,Multiple Carriers,31/03/2022,Tokyo,Taipei,Tokyo-Taipei,11:00,13:55,3h 50m,0,No info,25.0777,121.233002,-33.94609833,151.177002
-1,Multiple Carriers,31/03/2022,Tokyo,Hanoi,Tokyo-Hanoi,09:30,14:00,5h 50m,0,No info,21.22120094,105.8069992,-33.94609833,151.177002
-2,Multiple Carriers,31/03/2022,Tokyo,Bangkok,Tokyo-Bangkok,12:00,16:30,6h 30m,0,No info,13.68109989,100.7470016,-33.94609833,151.177002
-3,Multiple Carriers,31/03/2022,Tokyo,Kuala Lumpur,Tokyo-Kuala Lumpur,11:10,19:45,9h 35m,1,No info,2.745579958,101.7099991,-33.94609833,151.177002
-4,Multiple Carriers,31/03/2022,Tokyo,Osaka,Tokyo-Osaka,07:00,08:35,1h 30m,0,No info,34.78549957,135.4380035,-33.94609833,151.177002
-5,Multiple Carriers,31/03/2022,Tokyo,Fukuoka,Tokyo-Fukuoka,07:10,09:15,2h 5m,0,No info,33.58589935,130.451004,-33.94609833,151.177002
-6,Multiple Carriers,31/03/2022,Tokyo,Ho Chi Minh City,Tokyo-Ho Chi Minh City,10:00,18:15,9h 5m,1,No info,10.81879997,106.6520004,-33.94609833,151.177002
-7,Multiple Carriers,31/03/2022,Tokyo,Jakarta,Tokyo-Jakarta,11:05,16:50,7h 45m,0,No info,-6.12556982,106.6559982,-33.94609833,151.177002
