@@ -367,7 +367,7 @@ def get_photo(cities):
     for city in cities:
 
         #the response of this is a JSON file that generates a photo reference
-        api_key = "AIzaSyCMMb6QvT3xndUa0Phh5o2S2NWhmAKa5-A"
+        api_key = "###########"
         url = f'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input={city}&key={api_key}&inputtype=textquery&fields=name,photos'
         response = requests.request("GET", url).json()
 
