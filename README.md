@@ -1,74 +1,21 @@
-# Data analysis
-- Document here the project: smackbang
-- Description: Project Description
-- Data Source:
-- Type of analysis:
+# SmackBang
 
-Please document the project the better you can.
+A travel app that finds the middle ground between two origin locations so family, friends, and colleagues can meet up in the middle.  Users enter the two origins, their travel dates, their preferred continent to meet up, and currency to use.  The app uses API's to collect data which is then run through several models to give an evaluation of the destinations based on modelled price and the current sentiment of the destination.
 
-# Startup the project
+Users can click on booking links to book with kiwi.com or review the interactive map.
 
-The initial setup.
 
-Create virtualenv and install the project:
-```bash
-sudo apt-get install virtualenv python-pip python-dev
-deactivate; virtualenv ~/venv ; source ~/venv/bin/activate ;\
-    pip install pip -U; pip install -r requirements.txt
-```
 
-Unittest test:
-```bash
-make clean install test
-```
+App home: https://smackbang.herokuapp.com/
 
-Check for smackbang in gitlab.com/{group}.
-If your project is not set please add it:
+# Built with:
+-
+-
 
-- Create a new project on `gitlab.com/{group}/smackbang`
-- Then populate it:
 
-```bash
-##   e.g. if group is "{group}" and project_name is "smackbang"
-git remote add origin git@github.com:{group}/smackbang.git
-git push -u origin master
-git push -u origin --tags
-```
 
-Functionnal test with a script:
-
-```bash
-cd
-mkdir tmp
-cd tmp
-smackbang-run
-```
-
-# Install
-
-Go to `https://github.com/{group}/smackbang` to see the project, manage issues,
-setup you ssh public key, ...
-
-Create a python3 virtualenv and activate it:
-
-```bash
-sudo apt-get install virtualenv python-pip python-dev
-deactivate; virtualenv -ppython3 ~/venv ; source ~/venv/bin/activate
-```
-
-Clone the project and install it:
-
-```bash
-git clone git@github.com:{group}/smackbang.git
-cd smackbang
-pip install -r requirements.txt
-make clean install test                # install and test
-```
-Functionnal test with a script:
-
-```bash
-cd
-mkdir tmp
-cd tmp
-smackbang-run
-```
+# Team Members
+- <a href="https://github.com/lee-onidas">Lee Steven </a>
+- <a href="https://github.com/emadam">Emad Aminmoghadam </a>
+- <a href="https://github.com/yourpandaboy">Norty Nakagawa</a>
+- Paul Adolphson <a href="https://github.com/padofreo">Paul Adolphson</a>
