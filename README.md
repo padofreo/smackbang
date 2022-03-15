@@ -13,24 +13,26 @@ App home: https://smackbang.herokuapp.com/
 ![image](https://user-images.githubusercontent.com/27832889/158303402-4cf4292b-8292-4182-8835-0b9d6a06198f.png)
 
 
+
 # Tech Stack
-## Front End
+### Front End
 - <a href="https://streamlit.io/">Streamlit</a>
 - <a href="https://www.heroku.com/">Heroku</a>
 
-## Back End
+### Back End
 - <a href="https://fastapi.tiangolo.com/">FastAPI</a>
 - <a href="https://www.docker.com/">Docker</a>
 - <a href="https://cloud.google.com/">Google Cloud Platform</a>
 
-## Data Sources
+### Data Sources
 - <a href="https://tequila.kiwi.com/portal/login">kiwi.com Tequila API</a>
 - <a href="https://developer.twitter.com/en">Twitter API</a>
 - <a href="https://www.kaggle.com/c/air-ticket-fare-prediction/data">Kaggle: Air Ticket Fare Dataset</a>
 
-## Machine Learning Tools
+### Machine Learning Tools
 - <a href="https://xgboost.readthedocs.io/">XGBoost</a>
 - <a href="https://www.nltk.org/index.html">nltk </a>
+
 
 # Team Members
 - <a href="https://github.com/lee-onidas">Lee Steven </a>
