@@ -1,8 +1,8 @@
 ![image](https://user-images.githubusercontent.com/27832889/158303927-93f1aeae-f216-4e87-8f40-bb23969b55b5.png)
 
-SmackBang is a travel app that finds the middle ground between two origin locations so family, friends, and colleagues can meet up in the middle.  Users enter the two origins, their travel dates, their preferred continent to meet up, and currency to use.  
+SmackBang is a travel app that finds the middle ground between two origin locations so family, friends, and colleagues can meet up in the middle.  Users enter the two origins, their travel dates, their preferred continent to meet up, and the default currency to use.  
 
-The app uses API's to collect data which is then run through several models to predict the destination airfare, evaluate the prediction against the quoted price, and give an assesement of the current sentiment (aka "The Vibe") of the destination based on recents Tweets.
+The app uses API's to collect data which is then run through several models to predict the destination airfare, evaluate the prediction against the quoted price, and give an assessment of the current sentiment (aka "The Vibe") of the destination based on recent Tweets.
 
 Users are able to click on live booking links with <a href="https://www.kiwi.com">kiwi.com</a> to book or explore the destinations with the interactive map.
 
